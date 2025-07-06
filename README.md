@@ -20,7 +20,7 @@ GuildBankTracker is a lightweight World of Warcraft addon that logs and exports 
 | Command         | Description                                      |
 |-----------------|--------------------------------------------------|
 | `/gbt log`      | Show the 10 most recent transactions             |
-| `/gbt export`   | Export logs to CSV and save to SavedVariables    |
+| `/gbt_export`   | Export logs to CSV and save to SavedVariables    |
 | `/gbt_sync`     | Request logs from other guild members (manual)   |
 
 ---
