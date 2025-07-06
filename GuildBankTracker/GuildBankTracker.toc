@@ -1,0 +1,9 @@
+## Interface: 110107, 110200
+## Title: GuildBankTracker
+## Notes: Tracks and syncs guild bank transactions
+## Author: Mefisztulész & Copilot
+## Version: 0.1
+## SavedVariables: GuildBankTrackerDB
+
+## Code
+GuildBankTracker.lua
