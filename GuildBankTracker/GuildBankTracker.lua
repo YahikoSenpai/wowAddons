@@ -50,16 +50,23 @@ local function TimeAgo(timestamp)
 
     local pattern = "(%d+)%-(%d+)%-(%d+) (%d+):(%d+)"
     local y, m, d, h, min = timestamp:match(pattern)
-    if not y then return "some time ago" end
+    y, m, d, h, min = tonumber(y), tonumber(m), tonumber(d), tonumber(h), tonumber(min)
+
+    -- Validate date parts
+    if not (y and m and d and h and min) or d == 0 then
+        return "some time ago"
+    end
 
     local t = time({
-        year = tonumber(y),
-        month = tonumber(m),
-        day = tonumber(d),
-        hour = tonumber(h),
-        min = tonumber(min),
+        year = y,
+        month = m,
+        day = d,
+        hour = h,
+        min = min,
         sec = 0
     })
+
+    if not t then return "some time ago" end
 
     local diff = time() - t
     if diff < 60 then
@@ -132,6 +139,10 @@ function GuildBankTracker_GenerateKey(entry)
 end
 
 local function StripItemLink(link)
+    if not link then return "" end
+    -- Remove color codes like |cnXYZ: and |cXXXXXXXX
+    link = link:gsub("|c[nN]?[%x]+:", ""):gsub("|r", "")
+    -- Extract item name from brackets
     return link:match("%[(.-)%]") or link
 end
 
@@ -159,6 +170,8 @@ end
 
 SLASH_GBTEXPORT1 = "/gbt_export"
 SlashCmdList["GBTEXPORT"] = function()
+    print("Running /gbt_export...")  -- Debug line
+
     local lines = { "Timestamp,Action,Item,Count,Tab,Player" }
 
     for _, e in ipairs(GuildBankTrackerDB.transactions) do
